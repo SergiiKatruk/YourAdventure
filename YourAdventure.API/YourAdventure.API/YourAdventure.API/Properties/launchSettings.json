@@ -17,15 +17,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "YourAdventure.API": {
-      "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
+		"YourAdventure.API": {
+			"commandName": "Project",
+			"dotnetRunMessages": "true",
+			"launchBrowser": true,
+			"launchUrl": "swagger",
+			"applicationUrl": "https://ws525:5001;http://ws525:5000",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
+		}
   }
 }

@@ -1,12 +1,13 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, TextStyle, View, ViewStyle } from 'react-native'
 
 
-export const PropertyView = (label: string, text: any) => {
+export const PropertyView = (label: string, text: any, style?: ViewStyle, labelStyle?: TextStyle, valueStyle?: TextStyle) => {
+    var viewStyle = style ?? {alignItems: 'flex-start', flexDirection:'row'}
     return (
-        <View style={{alignItems: 'flex-start', flexDirection:'row'}}>
-            <Text>{label} </Text>
-            <Text>{text} </Text>
+        <View style={viewStyle}>
+            <Text style={labelStyle}>{label} </Text>
+            <Text style={valueStyle}>{text} </Text>
         </View>
     )
 }

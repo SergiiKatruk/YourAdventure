@@ -11,7 +11,7 @@ export const Menu = (props: any) => {
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.buttonStyle}
-          onPress={() => navigation.navigate(MenuContants.Trips)}
+          onPress={() => navigation.navigate(MenuContants.Adventures)}
         >
           <Text style={styles.buttonText}>Trips</Text>
         </TouchableOpacity>

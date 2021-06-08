@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using YourAdventure.API.Repository;
 using YourAdventure.API.Repository.Settigns;
 
 namespace YourAdventure.API
@@ -43,6 +44,7 @@ namespace YourAdventure.API
 					   .AllowAnyHeader();
 					});
 			});
+			services.AddSingleton<FaceBookRepository>();
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
@@ -60,12 +62,13 @@ namespace YourAdventure.API
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YourAdventure.API v1"));
 			}
 
-			app.UseHttpsRedirection();
+			//app.UseHttpsRedirection();
 
 			app.UseRouting();
 
 			app.UseAuthorization();
 
+			app.UseCors();
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
