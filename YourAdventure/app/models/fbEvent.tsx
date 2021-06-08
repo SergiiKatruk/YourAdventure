@@ -6,5 +6,21 @@ export interface FbEvent{
     id: string,
     cover: {
         source: any
+    },
+    interested_count: number,
+    attending_count: number,
+    maybe_count: number,
+    place: {
+        name: string,
+        location: {
+            city: string,
+            country: string,
+            latitude: number,
+            longitude: number
+        }
+    },
+    ticket_uri: string,
+    parent_group: {
+        name: string
     }
 }

@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 import { Home }  from './app/views/home'
 import { Contact } from './app/views/contact'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import MenuContants from './app/constants/menu'
 import { Adventures } from './app/views/adventures'
-import { TripDetails } from './app/views/tripDetails';
+import { TripDetails } from './app/views/tripDetails'
 
 const Stack = createStackNavigator()
 
@@ -19,5 +19,5 @@ export default function App() {
         <Stack.Screen name={MenuContants.Contact} component={Contact} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }

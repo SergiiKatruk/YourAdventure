@@ -13,7 +13,7 @@ namespace YourAdventure.API.Repository
 		{
 			var appId = "922302211175164";
 			var appSecret = "8e238a10634e17196c459d7cb3fcdf4f";
-			var shortLivedToken = "EAANG1DesMvwBAKbU3Qo5AYlOLrEaIr7qh8YpZCsF5LHZCwBZBZAHqD2zUJet3HrU5nUR26GehQ9u4pqOkBy66V5ZBMxZAENf8b4X52KzIeq2ytqDTaYDMVkL4ZAox35fVfXqSXF5fPfYB2B0RgyqAYZBccJQUnlPw0FtjZAmcthOsj0XnA1r8kMMC5tb8KoAwZCQZCxGueX0VN4tEfvGZB4ZCOhXpI4HCz8Bd5BEZD";
+			var shortLivedToken = "EAANG1DesMvwBALJXCtcviLRsQ0P5vACTQRDxdqyfosEOTDeD25e891ZB5SaSFSGAaziSbM7BxAENC7HYqvQgrKf2dx1zykSStacj8K6qBKp8qk7QYvGA1VZCi7BVdmGbZBQ4IFpR1Q8i40jkMVWDFpZAeImucOvfDa2zjV4ouxLzttGHZC4oY0ylb3ZCjlfUYSTcay47nONuGQWI0CfWyWvLM3YxZApk8MZD";
 			var fbclient = new Facebook.FacebookClient();
 			dynamic tokenResponse = fbclient.Get($"oauth/access_token?grant_type=fb_exchange_token&client_id={appId}&client_secret={appSecret}&fb_exchange_token={shortLivedToken}");
 			currentToken = tokenResponse.access_token;
@@ -40,7 +40,7 @@ namespace YourAdventure.API.Repository
 		public dynamic GetFBGroupEvents()
 		{
 			var groupId = "802789417021794";
-			var uri = $"{groupId}/events?fields=description, name, id, start_time, end_time, cover";
+			var uri = $"{groupId}/events?fields=description,name,id,start_time,end_time,cover,ticket_uri,parent_group,place,owner,interested_count,attending_count,maybe_count";
 			return this.MakeRequest(uri);
 		}
 	}
