@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { HeaderStyleInterpolators } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { ImageBackground, Text, View, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Adventue } from '../models/adventure'
+import { getPeriodString } from '../utils/stringFomatters'
+import { PropertyView } from './propertyView'
 
 export const TripDetails= (setCurrentAdventure: React.Dispatch<Adventue | undefined>) => (args: { route: any, navigation: any}) => {
     const eventItem: Adventue = args.route.params.item
@@ -39,8 +40,9 @@ export const TripDetails= (setCurrentAdventure: React.Dispatch<Adventue | undefi
         </ImageBackground>
         <View style={styles.detailContainer}>
             <Text style={styles.header}>Details</Text>
-            <Text>Event by: {eventItem.parent_group?.name}</Text>
+            <Text>{PropertyView('', getPeriodString(eventItem.start_time, eventItem.end_time), undefined, undefined, styles.date)}</Text>
             <Text>Location: {eventItem.place?.location?.city}</Text>
+            <Text>Event by: {eventItem.parent_group?.name}</Text>
             <Text>Tickets: {eventItem.ticket_uri}</Text>
             <Text>Going: {eventItem.attending_count}, Maybe: {eventItem.maybe_count}, Interesting: {eventItem.interested_count}</Text>
             <Text style={{marginTop: 10}}>{eventItem.description}</Text>
@@ -90,5 +92,9 @@ const styles = StyleSheet.create({
       header:{
           fontSize: 20,
           fontWeight: 'bold'
+      },
+      date: {
+          fontSize: 14,
+          color:'red'
       }
   });

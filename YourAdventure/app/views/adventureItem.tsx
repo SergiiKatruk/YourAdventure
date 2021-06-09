@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import MenuConstants from "../constants/menu"
 import { Adventue } from "../models/adventure"
 import { PropertyView } from "./propertyView"
-import Moment from 'moment'
+import { getPeriodString } from "../utils/stringFomatters"
 
 export const AdventureItem = (item: Adventue, navigation: any) => (
     <View style={styles.container}>
@@ -15,10 +15,6 @@ export const AdventureItem = (item: Adventue, navigation: any) => (
         </TouchableOpacity>
     </View>
 )
-
-const getPeriodString = (from: Date, to?: Date): string => to == null 
-    ? `${Moment(from).calendar()}` 
-    : `${Moment(from).calendar()} - ${Moment(to).calendar()}`
 
 const styles = StyleSheet.create(
     {
