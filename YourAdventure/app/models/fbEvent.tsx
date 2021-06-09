@@ -4,8 +4,8 @@ export interface FbEvent{
     name: string,
     start_time: Date,
     id: string,
-    cover: {
-        source: any
+    cover?: {
+        source?: string
     },
     interested_count: number,
     attending_count: number,
