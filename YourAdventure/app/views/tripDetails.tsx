@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { HeaderStyleInterpolators } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { ImageBackground, Text, View, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { FbEvent } from '../models/fbEvent'
+import { Adventue } from '../models/adventure'
 
-export const TripDetails= (setCurrentAdventure: React.Dispatch<FbEvent | undefined>) => (args: { route: any, navigation: any}) => {
-    const eventItem: FbEvent = args.route.params.item
-    console.log(args)
+export const TripDetails= (setCurrentAdventure: React.Dispatch<Adventue | undefined>) => (args: { route: any, navigation: any}) => {
+    const eventItem: Adventue = args.route.params.item
     const image = { uri: eventItem.cover?.source }
     const [isStrated, setIsStarted] = useState(true)
         
@@ -31,7 +31,7 @@ export const TripDetails= (setCurrentAdventure: React.Dispatch<FbEvent | undefin
 
     useEffect(() => {
         AsyncStorage.getItem('currentAdventure').then(value => setIsStarted(value != null && JSON.parse(value).id === eventItem.id))
-    }, [])
+    }, [args])
 
     return <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>

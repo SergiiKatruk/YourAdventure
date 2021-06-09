@@ -7,13 +7,13 @@ import MenuContants from './app/constants/menu'
 import { Adventures } from './app/views/adventures'
 import { TripDetails } from './app/views/tripDetails'
 import { adventureStatus } from './app/views/adventureStatus'
-import { FbEvent } from './app/models/fbEvent'
+import { Adventue } from './app/models/adventure'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Stack = createStackNavigator()
 
 export default function App() {
-  const [currentAdventure, setCurrentAdventure] = useState<FbEvent | undefined>(undefined)
+  const [currentAdventure, setCurrentAdventure] = useState<Adventue | undefined>(undefined)
   const refresh = () => AsyncStorage.getItem('currentAdventure').then(currentAdventureJson =>
     setCurrentAdventure(currentAdventureJson == null ? null : JSON.parse(currentAdventureJson))
   ).catch(err => console.log(err))

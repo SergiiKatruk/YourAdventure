@@ -1,4 +1,4 @@
-export interface FbEvent{
+export interface Adventue{
     description: string,
     end_time: Date,
     name: string,

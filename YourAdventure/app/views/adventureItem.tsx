@@ -2,11 +2,11 @@ import { StyleSheet, View } from "react-native"
 import React from 'react'
 import { TouchableOpacity } from "react-native-gesture-handler"
 import MenuConstants from "../constants/menu"
-import { FbEvent } from "../models/fbEvent"
+import { Adventue } from "../models/adventure"
 import { PropertyView } from "./propertyView"
 import Moment from 'moment'
 
-export const AdventureItem = (item: FbEvent, navigation: any) => (
+export const AdventureItem = (item: Adventue, navigation: any) => (
     <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate(MenuConstants.TripDetails, { item })} style={styles.itemContainer}>
             {PropertyView('', getPeriodString(item.start_time, item.end_time), undefined, undefined, styles.date)}
