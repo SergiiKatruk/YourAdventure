@@ -6,6 +6,7 @@ import { Adventue } from '../models/adventure'
 import { getPeriodString } from '../utils/stringFomatters'
 import { PropertyView } from './propertyView'
 import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions';
 import { CreateParticipant, LogLocation } from '../services/participant-service'
 import openMap from 'react-native-open-maps'
 
@@ -22,10 +23,18 @@ export const TripDetails= (
                 setIsStarted(true)
                 setCurrentAdventure(eventItem)
                 CreateParticipant(eventItem)
-                Location.watchPositionAsync({accuracy: Location.LocationAccuracy.Balanced}, loc => {
+                Permissions.askAsync(Permissions.LOCATION_FOREGROUND).then(res => {
+                    console.log(res)
+                    Location.getCurrentPositionAsync({accuracy: Location.LocationAccuracy.Balanced}).then(loc => {
+                        LogLocation(loc.coords.latitude, loc.coords.longitude)
+                        console.log(loc)
+                    })
+    
+                })            
+                
+                Location.watchPositionAsync({accuracy: Location.LocationAccuracy.Balanced, timeInterval: 5000}, loc => {
                     LogLocation(loc.coords.latitude, loc.coords.longitude)
                     console.log(loc)
-
                 })
             })
           } catch(e) {
