@@ -14,6 +14,7 @@ const Stack = createStackNavigator()
 
 export default function App() {
   const [currentAdventure, setCurrentAdventure] = useState<Adventue | undefined>(undefined)
+  const [currentGeoLocationWatchId, setCurrentGeoLocationWatchId] = useState<number | undefined>(undefined)
   const refresh = () => {
     AsyncStorage.getItem('currentAdventure').then(currentAdventureJson =>
     setCurrentAdventure(currentAdventureJson == null ? null : JSON.parse(currentAdventureJson))
@@ -21,7 +22,12 @@ export default function App() {
     
 
 }
-  useEffect(() => { refresh() }, [])    
+  useEffect(() => { 
+    refresh() 
+    return function cleanup() {
+      
+  }
+  }, [])    
   
   return (
     <NavigationContainer>
@@ -29,7 +35,7 @@ export default function App() {
         screenOptions={{headerRight: adventureStatus(currentAdventure)}}>
         <Stack.Screen name={MenuContants.Home} component={Home} />
         <Stack.Screen name={MenuContants.Adventures} component={Adventures} />
-        <Stack.Screen name={MenuContants.TripDetails} component={TripDetails(setCurrentAdventure)} />
+        <Stack.Screen name={MenuContants.TripDetails} component={TripDetails(setCurrentAdventure, setCurrentGeoLocationWatchId)} />
         <Stack.Screen name={MenuContants.Contact} component={Contact} />
       </Stack.Navigator>
     </NavigationContainer>

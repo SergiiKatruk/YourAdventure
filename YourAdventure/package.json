@@ -20,10 +20,13 @@
     "react-native": "~0.63.4",
     "react-native-async-storage": "0.0.1",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-open-maps": "^0.3.6",
     "react-native-reanimated": "~2.1.0",
     "react-native-screens": "~3.0.0",
     "react-native-unimodules": "~0.13.3",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "expo-location": "~12.0.4",
+    "expo-permissions": "~12.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

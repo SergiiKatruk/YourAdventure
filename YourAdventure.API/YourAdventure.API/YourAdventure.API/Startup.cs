@@ -46,6 +46,8 @@ namespace YourAdventure.API
 			});
 			services.AddSingleton<FaceBookRepository>();
 			services.AddSingleton<AdventuresRepository>();
+			services.AddSingleton<ParticipantLocationRepository>();
+			services.AddSingleton<AdventureParticipantRepository>();
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{

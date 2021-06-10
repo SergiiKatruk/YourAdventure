@@ -5,17 +5,28 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Adventue } from '../models/adventure'
 import { getPeriodString } from '../utils/stringFomatters'
 import { PropertyView } from './propertyView'
+import * as Location from 'expo-location'
+import { CreateParticipant, LogLocation } from '../services/participant-service'
+import openMap from 'react-native-open-maps'
 
-export const TripDetails= (setCurrentAdventure: React.Dispatch<Adventue | undefined>) => (args: { route: any, navigation: any}) => {
+export const TripDetails= (
+    setCurrentAdventure: React.Dispatch<Adventue | undefined>,
+    setCurrentGeoLocationWatchId: React.Dispatch<number | undefined>,) => (args: { route: any, navigation: any}) => {
     const eventItem: Adventue = args.route.params.item
     const image = { uri: eventItem.cover?.source }
     const [isStrated, setIsStarted] = useState(true)
-        
+    const [currentWathcID, setCurrentWathcID] = useState<number | undefined>(undefined)
     const startAdventure = async () => {
         try {
             await AsyncStorage.setItem('currentAdventure', JSON.stringify(eventItem)).then(() => {
                 setIsStarted(true)
                 setCurrentAdventure(eventItem)
+                CreateParticipant(eventItem)
+                Location.watchPositionAsync({accuracy: Location.LocationAccuracy.Balanced}, loc => {
+                    LogLocation(loc.coords.latitude, loc.coords.longitude)
+                    console.log(loc)
+
+                })
             })
           } catch(e) {
           }
@@ -26,6 +37,10 @@ export const TripDetails= (setCurrentAdventure: React.Dispatch<Adventue | undefi
             await AsyncStorage.removeItem('currentAdventure')
             setIsStarted(false)
             setCurrentAdventure(undefined)
+            setCurrentGeoLocationWatchId(undefined)
+            if(currentWathcID)
+            {
+            }
           } catch(e) {
           }
     }
@@ -46,6 +61,9 @@ export const TripDetails= (setCurrentAdventure: React.Dispatch<Adventue | undefi
             <Text>Tickets: {eventItem.ticket_uri}</Text>
             <Text>Going: {eventItem.attending_count}, Maybe: {eventItem.maybe_count}, Interesting: {eventItem.interested_count}</Text>
             <Text style={{marginTop: 10}}>{eventItem.description}</Text>
+            <TouchableOpacity onPress={() => {openMap({latitude: eventItem.place.location.latitude, longitude: eventItem.place.location.longitude})}}>
+                <Text>Open map</Text>
+            </TouchableOpacity>
             <View style={{flexDirection: 'row'}}>
             {
             !isStrated && (
