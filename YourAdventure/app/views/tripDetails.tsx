@@ -6,38 +6,36 @@ import { Adventue } from '../models/adventure'
 import { getPeriodString } from '../utils/stringFomatters'
 import { PropertyView } from './propertyView'
 import * as Location from 'expo-location'
-import * as Permissions from 'expo-permissions';
 import { CreateParticipant, LogLocation } from '../services/participant-service'
 import openMap from 'react-native-open-maps'
 
 export const TripDetails= (
     setCurrentAdventure: React.Dispatch<Adventue | undefined>,
-    setCurrentGeoLocationWatchId: React.Dispatch<number | undefined>,) => (args: { route: any, navigation: any}) => {
+    setCurrentGeoLocationWatchId: React.Dispatch<string | undefined>,) => (args: { route: any, navigation: any}) => {
     const eventItem: Adventue = args.route.params.item
     const image = { uri: eventItem.cover?.source }
     const [isStrated, setIsStarted] = useState(true)
-    const [currentWathcID, setCurrentWathcID] = useState<number | undefined>(undefined)
+    const [currentWathcID, setCurrentWathcID] = useState<string | undefined>(undefined)
     const startAdventure = async () => {
         try {
-            await AsyncStorage.setItem('currentAdventure', JSON.stringify(eventItem)).then(() => {
-                setIsStarted(true)
-                setCurrentAdventure(eventItem)
-                CreateParticipant(eventItem)
-                Permissions.askAsync(Permissions.LOCATION_FOREGROUND).then(res => {
-                    console.log(res)
-                    Location.getCurrentPositionAsync({accuracy: Location.LocationAccuracy.Balanced}).then(loc => {
-                        LogLocation(loc.coords.latitude, loc.coords.longitude)
-                        console.log(loc)
-                    })
-    
-                })            
-                
-                Location.watchPositionAsync({accuracy: Location.LocationAccuracy.Balanced, timeInterval: 5000}, loc => {
+            await AsyncStorage.setItem('currentAdventure', JSON.stringify(eventItem))
+            setIsStarted(true)
+            setCurrentAdventure(eventItem)
+            CreateParticipant(eventItem)
+            const fPermission = await Location.requestForegroundPermissionsAsync()
+            const bPermission = await Location.requestBackgroundPermissionsAsync()
+            if(fPermission.granted && bPermission.granted){
+                var currentPosition = await Location.getCurrentPositionAsync()
+                LogLocation(currentPosition.coords.latitude, currentPosition.coords.longitude)
+                await Location.startLocationUpdatesAsync('yourAdventure', {accuracy: Location.LocationAccuracy.Highest, timeInterval: 1000, distanceInterval: 0})
+                Location.watchPositionAsync({accuracy: Location.LocationAccuracy.Balanced}, loc => {
                     LogLocation(loc.coords.latitude, loc.coords.longitude)
                     console.log(loc)
                 })
-            })
-          } catch(e) {
+                setCurrentWathcID('yourAdventure')
+                setCurrentGeoLocationWatchId('yourAdventure')
+            }
+        } catch(e) {
           }
     }
 
@@ -49,6 +47,7 @@ export const TripDetails= (
             setCurrentGeoLocationWatchId(undefined)
             if(currentWathcID)
             {
+                Location.stopLocationUpdatesAsync(currentWathcID)
             }
           } catch(e) {
           }
