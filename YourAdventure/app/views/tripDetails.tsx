@@ -69,19 +69,27 @@ export const TripDetails= (
             <Text>Tickets: {eventItem.ticket_uri}</Text>
             <Text>Going: {eventItem.attending_count}, Maybe: {eventItem.maybe_count}, Interesting: {eventItem.interested_count}</Text>
             <Text style={{marginTop: 10}}>{eventItem.description}</Text>
-            <TouchableOpacity onPress={() => {openMap({latitude: eventItem.place.location.latitude, longitude: eventItem.place.location.longitude})}}>
+            <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => {openMap({latitude: eventItem.place.location.latitude, longitude: eventItem.place.location.longitude})}}>
                 <Text>Open map</Text>
             </TouchableOpacity>
+            </View>
             <View style={{flexDirection: 'row'}}>
             {
             !isStrated && (
-            <TouchableOpacity onPress={() => startAdventure()}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => startAdventure()}>
                 <Text>Start</Text>
             </TouchableOpacity>)
             }
             {
             isStrated && (
-            <TouchableOpacity onPress={finishAdventure}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={finishAdventure}>
                 <Text>Finish</Text>
             </TouchableOpacity>)
             }
@@ -122,5 +130,13 @@ const styles = StyleSheet.create({
       date: {
           fontSize: 14,
           color:'red'
+      },
+      button: {
+          marginTop: 5,
+          backgroundColor: "#00cc00",
+          flexDirection: 'row',
+          borderRadius: 2,
+          borderColor: "#248f24",
+          borderWidth: 2
       }
   });

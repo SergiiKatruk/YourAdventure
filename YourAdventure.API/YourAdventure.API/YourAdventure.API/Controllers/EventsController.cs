@@ -13,25 +13,23 @@ namespace YourAdventure.API.Controllers
 	[ApiController]
 	public class EventsController : ControllerBase
 	{
-		private readonly FaceBookRepository fbRepo;
-		private readonly AdventuresRepository adventuresRepository;
+		private readonly FaceBookRepository _fbRepo;
+		private readonly AdventuresRepository _adventuresRepository;
 
 		public EventsController(FaceBookRepository fbRepo, AdventuresRepository adventuresRepository)
 		{
-			this.fbRepo = fbRepo ?? throw new ArgumentNullException(nameof(fbRepo));
-			this.adventuresRepository = adventuresRepository ?? throw new ArgumentNullException(nameof(adventuresRepository));
+			_fbRepo = fbRepo ?? throw new ArgumentNullException(nameof(fbRepo));
+			_adventuresRepository = adventuresRepository ?? throw new ArgumentNullException(nameof(adventuresRepository));
 		}
 
 		[HttpGet]
-		public IEnumerable<dynamic> Get()
-		{
-			//return ((IEnumerable<dynamic>)this.fbRepo.GetFBGroupEvents().data).
-			//Where(ev => Facebook.DateTimeConvertor.FromIso8601FormattedDateTime(ev.start_time) > DateTime.Now);
-			return this.adventuresRepository.AllAdventures();
-		}
+		public IEnumerable<dynamic> Get() => _adventuresRepository.AllAdventures();
+
+		[HttpGet("/api/Events/Fb")]
+		public IEnumerable<dynamic> GetFbEvents() => _fbRepo.GetFBGroupEvents().data;
 
 		[HttpPost]
-		public Adventure Create(Adventure adventure) => this.adventuresRepository.CreateAdventure(adventure);
+		public Adventure Create(Adventure adventure) => _adventuresRepository.CreateAdventure(adventure);
 
 		[HttpPost("/api/Events/{id}/join")]
 		public string JoinAdventure(string id, string userId, string userName)
