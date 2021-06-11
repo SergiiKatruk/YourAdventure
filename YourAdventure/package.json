@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-navigation/drawer": "^5.12.5",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
     "expo": "~41.0.1",
@@ -22,7 +23,7 @@
     "react-native-async-storage": "0.0.1",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-open-maps": "^0.3.6",
-    "react-native-reanimated": "~2.1.0",
+    "react-native-reanimated": "^2.1.0",
     "react-native-screens": "~3.0.0",
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12"

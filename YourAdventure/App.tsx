@@ -3,6 +3,7 @@ import { Home }  from './app/views/home'
 import { Contact } from './app/views/contact'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import MenuContants from './app/constants/menu'
 import { Adventures } from './app/views/adventures'
 import { TripDetails } from './app/views/tripDetails'
@@ -31,15 +32,43 @@ export default function App() {
   }
   }, [])    
   
+  const Drawer = createDrawerNavigator()
+
   return (
     <NavigationContainer>
-      <Stack.Navigator mode='modal' initialRouteName={MenuContants.Home} 
-        screenOptions={{headerRight: adventureStatus(currentAdventure)}}>
-        <Stack.Screen name={MenuContants.Home} component={Home} />
-        <Stack.Screen name={MenuContants.Adventures} component={Adventures} />
-        <Stack.Screen name={MenuContants.TripDetails} component={TripDetails(setCurrentAdventure, setCurrentGeoLocationWatchId)} />
-        <Stack.Screen name={MenuContants.Contact} component={Contact} />
-      </Stack.Navigator>
+      <Drawer.Navigator 
+        initialRouteName={MenuContants.Adventures} 
+        screenOptions={{
+          headerRight: adventureStatus(currentAdventure),
+          headerShown: true
+        }}
+        drawerContent={(props) => {
+          const filteredProps = {
+            ...props,
+            state: {
+              ...props.state,
+              routeNames: props.state.routeNames.filter(
+                (routeName) => {
+                  routeName !== MenuContants.TripDetails || (routeName == MenuContants.TripDetails && currentAdventure != undefined)
+                }
+              ),
+              routes: props.state.routes.filter(
+                (route) =>
+                  route.name !== MenuContants.TripDetails || (route.name == MenuContants.TripDetails && currentAdventure != undefined)
+              ),
+            },
+          };
+          return (
+            <DrawerContentScrollView {...filteredProps}>
+              <DrawerItemList {...filteredProps} />
+            </DrawerContentScrollView>
+          );
+        }}>
+        <Drawer.Screen name={MenuContants.Home} component={Home} />
+        <Drawer.Screen name={MenuContants.Adventures} component={Adventures} />
+        <Drawer.Screen name={MenuContants.TripDetails} component={TripDetails(setCurrentAdventure, setCurrentGeoLocationWatchId)} />
+        <Drawer.Screen name={MenuContants.Contact} component={Contact} />
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }

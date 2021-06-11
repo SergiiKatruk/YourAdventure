@@ -5,39 +5,25 @@ import MenuContants from '../constants/menu'
 
 export const Menu = (props: any) => {
   const navigation = useNavigation()
-  const buttonPressedPress = () => Alert.alert("ButtonPressed");
   return (
     <View style={styles.container}>
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.buttonStyle}
-          onPress={() => navigation.navigate(MenuContants.Adventures)}
-        >
+          onPress={() => navigation.navigate(MenuContants.Adventures)}>
           <Text style={styles.buttonText}>Trips</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={buttonPressedPress}
-        >
-          <Text style={styles.buttonText} onPress={() => navigation.navigate(MenuContants.Registration)}>REGISTER</Text>
+          style={styles.buttonStyle}>
+          <Text style={styles.buttonText} onPress={() => navigation.navigate(MenuContants.Registration)}>Register</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.buttonStyle}
-          onPress={() => navigation.navigate(MenuContants.Contact)}
-        >
-          <Text style={styles.buttonText}>CONTACT</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.buttonRow}>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={buttonPressedPress}
-        >
-          <Text style={styles.buttonText}>ABOUT</Text>
+          onPress={() => navigation.navigate(MenuContants.Contact)}>
+          <Text style={styles.buttonText}>Contact us</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -46,22 +32,23 @@ export const Menu = (props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 6,
+    flex: 1,
     backgroundColor: "#35605a",
   },
   buttonRow: {
-    flex: 2,
+    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#ffffff",
-    borderBottomWidth: 1,
+    alignContent: 'stretch',
+    alignItems: "stretch",
   },
   buttonStyle: {
-    backgroundColor: "#35605a",
-    width: "50%",
-    height: "50%",
+    flex: 1,
+    backgroundColor: "red",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: 'center',
+    borderColor: "#ffffff",
+    borderLeftWidth: 1,
+    borderBottomWidth: 1,
   },
   buttonText: {
     borderColor: "#ffffff",
